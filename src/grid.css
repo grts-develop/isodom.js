@@ -1,0 +1,33 @@
+table {
+    -webkit-transform: rotateX(55deg) rotateZ(45deg);
+    margin-top: -100px;
+    margin-left: 200px;
+    border-collapse: collapse;
+    min-width: 1000px;
+    min-height: 1000px;
+}
+
+table tr td {
+    border: 1px solid red;
+    width: 100px;
+    height: 100px;
+    text-align: center;
+}
+
+table tr td:hover {
+    background-color: lightgrey;
+}
+
+table tr td span {
+    position: absolute;
+}
+
+img {
+    position: absolute;
+    transform: scale(0.65);
+    /*pointer-events: none;*/
+}
+
+img:hover {
+    opacity: 0.5;
+}
