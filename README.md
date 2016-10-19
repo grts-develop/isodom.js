@@ -11,9 +11,9 @@ apart from the vanilla javascript api exposed by isodom, we are planning to add 
 
 # planned features
 
--[ ] isometric projection of tile based grid
-  -[ ] view/camera capable of scrolling, zoom and rotating by 90 degrees
-  -[ ] tiles, that can be positioned along all 3 dimensions (x,y,z)
--[ ] api to access and manipulate tiles
--[ ] api to move the view/camera around the world
--[ ] scheme for tile constructs, objects consisting of multiple tiles
+- [ ] isometric projection of tile based grid
+  - [ ] view/camera capable of scrolling, zoom and rotating by 90 degrees
+  - [ ] tiles, that can be positioned along all 3 dimensions (x,y,z)
+- [ ] api to access and manipulate tiles
+- [ ] api to move the view/camera around the world
+- [ ] scheme for tile constructs, objects consisting of multiple tiles
