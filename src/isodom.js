@@ -109,9 +109,11 @@ module.exports = {
         $('#gameObjects').each(function() {
             var object = $(this);
             var position = {x: Number(object.attr('data-x')), y: Number(object.attr('data-y'))};
-            moveObject(object, position);
+            this.moveObject(object, position);
 
             var objectTD = $("td[data-x=" + position.x + "][data-y=" + position.y + "]");
+
+            var itemSize = [1, 1];
 
             for(var x = position.x; x <= (position.x+itemSize[0]-1); x++) {
                 for(var y = position.y; y < (position.y+itemSize[1]); y++) {
@@ -122,6 +124,7 @@ module.exports = {
 
                     var td = $("td[data-x=" + x + "][data-y=" + y + "]");
                     td.attr("data-z", objectTD.attr("data-z"));
+                    td.attr("data-object", JSON.stringify({x:position.x, y:position.y}));
                     td.html("X: " + position.x + "<br/>Y: " + y + "<br/>Z: " + td.attr("data-z"));
                 }
             }
@@ -129,6 +132,29 @@ module.exports = {
             var TempValue = objectTD.attr("data-z");
             var previousX = $("td[data-x=" + (position.x-1) + "][data-y=" + (position.y) + "]").attr("data-z");
             var previousY = $("td[data-x=" + (position.x) + "][data-y=" + (position.y-1) + "]").attr("data-z");
+
+            for(var tX = position.x-1; tX > 0; tX--) {
+                var test = $("td[data-x=" + (tX) + "][data-y=" + (position.y) + "]");
+                if(test.attr("data-object") !== "false") {
+                    var oData = JSON.parse($("td[data-x=" + (tX) + "][data-y=" + (position.y) + "]").attr("data-object"));
+                    var tmp = Number($("img[data-x=" + oData.x + "][data-y=" + oData.y + "]").css("zIndex"))+1;
+                    if(tmp > previousX) {
+                        previousX = tmp;
+                    }
+                    break;
+                }
+            }
+            for(var tY = position.y-1; tY > 0; tY--) {
+                var test = $("td[data-x=" + (position.x) + "][data-y=" + (tY) + "]");
+                if(test.attr("data-object") !== "false") {
+                    var oData = JSON.parse($("td[data-x=" + (position.x) + "][data-y=" + (tY) + "]").attr("data-object"));
+                    var tmp = Number($("img[data-x=" + oData.x + "][data-y=" + oData.y + "]").css("zIndex"))+1;
+                    if(tmp > previousY) {
+                        previousY = tmp;
+                    }
+                    break;
+                }
+            }
 
             if(itemSize[0] != 1)
                 previousX = $("td[data-x=" + (position.x-1) + "][data-y=" + (position.y+itemSize[1]-1) + "]").attr("data-z");
@@ -141,8 +167,7 @@ module.exports = {
             if(TempValue < previousY) {
                 TempValue = Number(Number(previousY)+Number(1));
             }
-
-            console.log(object.attr("class") + " " + position.x + " " + position.y + " " + objectTD.attr("data-z") + " | " + previousX + " | " + previousY);
+            //console.log(object.attr("class") + " " + position.x + " " + position.y + " " + objectTD.attr("data-z") + " | " + previousX + " | " + previousY);
 
             object.css("zIndex", TempValue);
             objectTD.attr("data-z", TempValue);
@@ -151,9 +176,29 @@ module.exports = {
                 for(var y = position.y; y < (position.y+itemSize[1]); y++) {
                     var td = $("td[data-x=" + x + "][data-y=" + y + "]");
                     td.attr("data-z", objectTD.attr("data-z"));
-                    td.html("X: " + position.x + "<br/>Y: " + y + "<br/>Z: " + td.attr("data-z"));
+                    td.html("X: " + x + "<br/>Y: " + y + "<br/>Z: " + td.attr("data-z"));
                 }
             }
         });
+    },
+
+    /*
+     * Get the td index from a position
+     * @param {object} position
+     * @return {number}
+     */
+    // (x,y) -> index of <td>
+    pickTD: function(position) {
+        return position.y * rows + position.x;
+    },
+
+    /*
+     * Move the object to the correct location
+     * @param {object} object
+     * @param {object} position
+     */
+    moveObject: function(object, position) {
+        var cell = $('table tr td').eq(this.pickTD(position)).position();
+        object.css('top', cell.top).css('left', cell.left);
     }
 };
