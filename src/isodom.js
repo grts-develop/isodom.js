@@ -9,11 +9,17 @@ module.exports = {
     settings: {
         rows: 1,
         cols: 1,
-        width: 100,
-        height: 100
+        cellWidth: 100,
+        cellHeight: 100
     },
 
     helper: {
+        /*
+         * Sorts the gameObjects in a specific order for z-indexing generation later on, used by sortItems
+         * @param {mixed} b
+         * @param {mixed} a
+         * @return {number}
+         */
         sortFunction: function(b, a) {
             if (a.y == b.y)
                 return a.x - b.x;
@@ -21,18 +27,30 @@ module.exports = {
         }
     },
 
-    create: function(rows, cols, width, height) {
+    /*
+     * Creates a grid
+     * @param {number} rows - The number of rows required
+     * @param {number} cols - The number of rows required
+     * @param {number} cellWidth - The width if each square in the grid
+     * @param {number} cellHeight - The height if each square in the grid
+     */
+    create: function(rows, cols, cellWidth, cellHeight) {
         console.log("Grid()");
         this.settings.rows = rows;
         this.settings.cols = cols;
-        this.settings.width = width;
-        this.settings.height = height;
+        this.settings.cellWidth = cellWidth;
+        this.settings.cellHeight = cellHeight;
 
         this.generateTable();
         this.generateRowsAndCols();
         this.generateGameObjects();
     },
 
+    /*
+     * Creates a table within body
+     * TODO: add support for ready made parents (instead of just body)
+     * @return {object}
+     */
     generateTable: function() {
         this._private.table = $('<table></table>');
         this._private.table.attr('id', "grid")
@@ -41,6 +59,9 @@ module.exports = {
         return this._private.table;
     },
 
+    /*
+     * Creates the rows and columns within table
+     */
     generateRowsAndCols: function() {
         var tbody = $('<tbody/>');
         for (var row = 0; row < this.settings.rows; row++) {
@@ -58,17 +79,30 @@ module.exports = {
         this._private.table.append(tbody);
     },
 
+    /*
+     * Creates the gameobject container (div)
+     * TODO: add support for ready made parents (instead of just body)
+     * @return {object}
+     */
     generateGameObjects: function() {
         this._private.gameObjects = $("<div />");
         this._private.gameObjects.attr("id", "gameObjects");
 
         $('body').append(this._private.gameObjects);
+        return this._private.gameObjects;
     },
 
+    /*
+     * Sorts the gameObjects in a specific order for z-indexing generation later on
+     */
     sortItems: function() {
         $('#gameObjects').sort(this.helper.sortFunction);
     },
 
+    /*
+     * Generates the z-index for the objects created
+     * TODO: remake/separate into multiple functions
+     */
     generateZindex: function() {
         this.sortItems();
 
@@ -120,10 +154,6 @@ module.exports = {
                     td.html("X: " + position.x + "<br/>Y: " + y + "<br/>Z: " + td.attr("data-z"));
                 }
             }
-        });
-
-        $('img').click(function () {
-            console.log($(this).css('zIndex'));
         });
     }
 };
