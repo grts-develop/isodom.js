@@ -1,4 +1,4 @@
-![Logo](https://dl.dropboxusercontent.com/u/20349051/isodom.jpg)
+<img src="https://dl.dropboxusercontent.com/u/20349051/isodom.jpg" width="500" height="171">
 
 isodom.js is an isometric DOM-based grid/item system for games
 
