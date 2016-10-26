@@ -1,4 +1,5 @@
-# isodom.js
+![Logo](https://dl.dropboxusercontent.com/u/20349051/isodom.jpg)
+
 isodom.js is an isometric DOM-based grid/item system for games
 
 # dependencies
