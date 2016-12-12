@@ -2,15 +2,14 @@
   "name": "isodom.js",
   "version": "0.0.0",
   "private": true,
-  "dependencies": {
-    "webpack": ""
-  },
   "scripts": {
     "dev": "webpack-dev-server --inline --hot --colors --progress",
     "build": "webpack --progress --colors -p"
   },
   "devDependencies": {
     "css-loader": "^0.25.0",
-    "style-loader": "^0.13.1"
+    "style-loader": "^0.13.1",
+    "webpack": "2.1.0-beta.27",
+    "webpack-dev-server": "^1.16.2"
   }
 }
