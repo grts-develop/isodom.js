@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "webpack-dev-server --inline --hot --colors --progress",
-    "build": "webpack --progress --colors -p"
+    "build": "webpack --config build/dist.js && webpack --config build/dist.minified.js"
   },
   "devDependencies": {
     "css-loader": "^0.25.0",
