@@ -7,7 +7,7 @@ const dist = {
     output: {
         path: path.join(__dirname, "../dist"),
         filename: "isodom.js",
-        library: ["isodom"],
+        library: ["Isodom"],
         libraryTarget: "umd",
     },
     module: {
